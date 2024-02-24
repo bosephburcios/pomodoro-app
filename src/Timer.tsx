@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import audioFile from './sounds/beep.mp3';
+import audioMusic from './sounds/lofi.mp3';
 
 const Timer = () => {
     const intitialWorkTime = 1500; // 25 minutes
@@ -8,9 +9,11 @@ const Timer = () => {
     const [time, setTime] = useState(intitialWorkTime);
     const [isRunning, setIsRunning] = useState(false);
     const [cyclesCompleted, setCyclesCompleted] = useState(0);
-    const [isWorkPhase, setIsWorkPhase] = useState(true);
+    const [isWorkPhase, setIsWorkPhase] = useState(true); 
+    const [count, setCount] = useState(0);
 
     const audio = new Audio(audioFile);
+    const music = new Audio(audioMusic);
 
     useEffect(() => {
         let timerInterval: NodeJS.Timeout;
@@ -28,6 +31,7 @@ const Timer = () => {
                             setCyclesCompleted(prevCycles => prevCycles + 1);
                         }
                         audio.play();
+                        music.pause();
                     } 
                     return prevTime - 1;
                 });
@@ -44,6 +48,14 @@ const Timer = () => {
 
     const toggleTimer = () => {
         setIsRunning(!isRunning);
+
+        if (count === 0) {
+            setCount(1);
+            music.play();
+        } else {
+            setCount(0);
+            music.pause();
+        }
     };
 
     const resetTimer = () => {
@@ -51,8 +63,9 @@ const Timer = () => {
         setIsRunning(false);
         setCyclesCompleted(0);
         setIsWorkPhase(true);
+        music.pause();
+        setCount(0);
     };
-
 
     return (
         <div className="timer">
