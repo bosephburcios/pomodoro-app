@@ -5,12 +5,12 @@ import audioMusic from './sounds/lofi.mp3';
 const Timer = () => {
     const intitialWorkTime = 1500; // 25 minutes
     const initialBreakTime = 300; // 5 minutes
+    var isPlaying = false;
 
     const [time, setTime] = useState(intitialWorkTime);
     const [isRunning, setIsRunning] = useState(false);
     const [cyclesCompleted, setCyclesCompleted] = useState(0);
     const [isWorkPhase, setIsWorkPhase] = useState(true); 
-    const [count, setCount] = useState(0);
 
     const audio = new Audio(audioFile);
     const music = new Audio(audioMusic);
@@ -31,7 +31,6 @@ const Timer = () => {
                             setCyclesCompleted(prevCycles => prevCycles + 1);
                         }
                         audio.play();
-                        music.pause();
                     } 
                     return prevTime - 1;
                 });
@@ -48,14 +47,22 @@ const Timer = () => {
 
     const toggleTimer = () => {
         setIsRunning(!isRunning);
+    };
 
-        if (count === 0) {
-            setCount(1);
-            music.play();
-        } else {
-            setCount(0);
-            music.pause();
-        }
+    function togglePlay() {
+        isPlaying ? music.pause() : music.play();
+    };
+      
+    music.onplaying = function() {
+        isPlaying = true;
+    };
+    music.onpause = function() {
+        isPlaying = false;
+    };
+
+    const handleToggle = () => {
+        toggleTimer();
+        togglePlay();
     };
 
     const resetTimer = () => {
@@ -63,8 +70,6 @@ const Timer = () => {
         setIsRunning(false);
         setCyclesCompleted(0);
         setIsWorkPhase(true);
-        music.pause();
-        setCount(0);
     };
 
     return (
@@ -73,9 +78,10 @@ const Timer = () => {
                 {formatTime(time)}
             </div>
             <div className="controls">
-                <button onClick={toggleTimer}>{isRunning ? 'Pause' : 'Start'}</button>
+                <button onClick={handleToggle}>{isRunning ? 'Pause' : 'Start'}</button>
                 <button onClick={resetTimer}>Reset</button>
             </div>
+            
         </div>
     );
 };
