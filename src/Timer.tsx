@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import audioFile from './sounds/alarm.mp3';
 import song1 from './sounds/sonny.mp3';
-import song2 from './sounds/body-and-soul.mp3';
-import song3 from './sounds/lofi.mp3';
+import song2 from './sounds/My Foolish Heart.mp3';
+import song3 from './sounds/Body & Soul.mp3';
+import song4 from './sounds/All The Things You Are.mp3';
+import song5 from './sounds/if i am with you.mp3';
 
-const songs = [song1, song2, song3];
+const songs = [song1, song2, song3, song4, song5];
 
 const Timer: React.FC = () => {
     const initialWorkTime = 1500; // 25 minutes
@@ -51,11 +53,21 @@ const Timer: React.FC = () => {
     }, [cyclesCompleted]);
 
     const handleSongEnd = () => {
-        const nextIndex = (currentSongIndex + 1) % songs.length;
-        setCurrentSongIndex(nextIndex);
-        setMusic(new Audio(songs[nextIndex]));
-        music.play();
+        setTimeout(() => {
+            const nextIndex = (currentSongIndex + 1) % songs.length;
+            setCurrentSongIndex(nextIndex);
+            const nextMusic = new Audio(songs[nextIndex]);
+            setMusic(nextMusic);
+            nextMusic.play();
+        }, 2000);
     };
+    
+    useEffect(() => {
+        music.addEventListener('ended', handleSongEnd);
+        return () => {
+            music.removeEventListener('ended', handleSongEnd);
+        };
+    }, [music, currentSongIndex]);
 
     const toggleTimer = () => {
         if (!isRunning) {
@@ -83,6 +95,7 @@ const Timer: React.FC = () => {
         setCyclesCompleted(0);
         setIsWorkPhase(true);
         setCurrentSongIndex(0);
+        setMusic(new Audio(songs[0]));
         music.pause();
         music.currentTime = 0;
     };
