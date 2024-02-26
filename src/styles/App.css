@@ -1,3 +1,4 @@
+/* Sets up background gif */
 body {
   padding: 0;
   margin: 0;
@@ -37,7 +38,7 @@ body {
 .App-link {
   color: #61dafb;
 }
-/* 648cfa */
+
 .center {
   display: flex;
   justify-content: center;
@@ -51,6 +52,7 @@ body {
   background-color: transparent; 
 }
 
+/* Sets up circle with outline */
 .circle-container {
   width: 400px;
   height: 400px;
@@ -90,6 +92,7 @@ body {
   font-size: 16px;
   cursor: pointer;
 }
+
 /* Add margin between the buttons and the circle */
 .controls {
   margin-top: 60px;
@@ -98,14 +101,14 @@ body {
 }
 
 .controls button:hover {
-  background-color: #5277d9;
+  background-color: #6383da;
 }
 
 .controls button:focus {
   outline: none;
 }
 
-
+/* Work In Progress: Want to have a progress indicator */
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

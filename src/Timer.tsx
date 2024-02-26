@@ -6,6 +6,7 @@ import song3 from './sounds/Body & Soul.mp3';
 import song4 from './sounds/All The Things You Are.mp3';
 import song5 from './sounds/if i am with you.mp3';
 
+// array of songs that play during timer
 const songs = [song1, song2, song3, song4, song5];
 
 const Timer: React.FC = () => {
@@ -21,6 +22,8 @@ const Timer: React.FC = () => {
     const audio = new Audio(audioFile);
     const [music, setMusic] = useState(new Audio(songs[currentSongIndex]));
 
+    // Sets up the timer and checks to see if cycles have been completed.
+    // Also checks to see if work time is done to switch to break and then back.
     useEffect(() => {
         let timerInterval: NodeJS.Timeout;
 
@@ -37,7 +40,7 @@ const Timer: React.FC = () => {
                             setCyclesCompleted(prevCycles => prevCycles + 1);
                             setCurrentSongIndex((prevIndex) => (prevIndex + 1) % songs.length);
                         }
-                        audio.play();
+                        audio.play(); // timer beep when it hits 0
                     } 
                     return prevTime - 1;
                 });
@@ -46,12 +49,15 @@ const Timer: React.FC = () => {
         return () => clearInterval(timerInterval);
     }, [isRunning, isWorkPhase, cyclesCompleted]);
 
+    // once cycles have been completed, stop the timer
     useEffect(() => {
         if (cyclesCompleted === 8) {
             setIsRunning(false);
         }
     }, [cyclesCompleted]);
 
+    // Once a song within the array has finished switch to the next song with delay in between.
+    // Also once we reach end of the array, go back to the beginning of the array
     const handleSongEnd = () => {
         setTimeout(() => {
             const nextIndex = (currentSongIndex + 1) % songs.length;
@@ -59,9 +65,10 @@ const Timer: React.FC = () => {
             const nextMusic = new Audio(songs[nextIndex]);
             setMusic(nextMusic);
             nextMusic.play();
-        }, 2000);
+        }, 1500); // 1500 milliseconds
     };
     
+    // Method to call when song ends.
     useEffect(() => {
         music.addEventListener('ended', handleSongEnd);
         return () => {
@@ -69,6 +76,7 @@ const Timer: React.FC = () => {
         };
     }, [music, currentSongIndex]);
 
+    // Adds functionality to buttons for the music and to stop timer.
     const toggleTimer = () => {
         if (!isRunning) {
             if (music.paused) {
@@ -89,6 +97,7 @@ const Timer: React.FC = () => {
         }
     };
 
+    // Once user presses to restart, set everything to the default
     const resetTimer = () => {
         setTime(initialWorkTime);
         setIsRunning(false);
@@ -114,6 +123,7 @@ const Timer: React.FC = () => {
     );
 };
 
+// helper method to set up time in timer.
 const formatTime = (time: number) => {
     const minutes = Math.floor(time / 60);
     const seconds = time % 60;
