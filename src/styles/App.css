@@ -54,18 +54,18 @@ body {
 .circle-container {
   width: 400px;
   height: 400px;
-  background-color: #fff;
+  background-color: #f5f5f9;
   border-radius: 50%;
   position: relative;
   overflow: hidden;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   border: 6px solid #e89a9a;
 }
 
 .circle-container .timer {
-  font-size: 45px; /* Larger font size */
+  font-size: 60px; /* Larger font size */
   font-weight: bold; /* Bold font weight */
-  margin-top: 20px;
+  color: #2d2d2e;
 }
 
 .background {
