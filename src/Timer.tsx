@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import audioFile from './sounds/alarm.mp3';
 import song1 from './sounds/sonny.mp3';
-import song2 from './sounds/My Foolish Heart.mp3';
-import song3 from './sounds/Body & Soul.mp3';
-import song4 from './sounds/All The Things You Are.mp3';
-import song5 from './sounds/if i am with you.mp3';
+import song2 from '.sounds/Autumn Leaves.mp3';
+import song3 from './sounds/My Foolish Heart.mp3';
+import song4 from './sounds/Body & Soul.mp3';
+import song5 from './sounds/All The Things You Are.mp3';
+import song6 from './sounds/if i am with you.mp3';
 
 // array of songs that play during timer
-const songs = [song1, song2, song3, song4, song5];
+const songs = [song1, song2, song3, song4, song5, song6];
 
 const Timer: React.FC = () => {
     const initialWorkTime = 1500; // 25 minutes
