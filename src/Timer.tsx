@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import audioFile from './sounds/alarm.mp3';
 import song1 from './sounds/sonny.mp3';
-import song2 from '.sounds/Autumn Leaves.mp3';
+import song2 from './sounds/Autumn Leaves.mp3';
 import song3 from './sounds/My Foolish Heart.mp3';
 import song4 from './sounds/Body & Soul.mp3';
 import song5 from './sounds/All The Things You Are.mp3';
